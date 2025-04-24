@@ -1,7 +1,12 @@
-import { View, Text, ScrollView } from "react-native";
+import React from "react";
+import { View, Text } from "react-native";
 import { styles } from "./TodoStyles";
-
-const Todo = ({ todo }) => {
+import { FunctionComponent } from "react";
+import { TodoType } from "../store/RootStore";
+interface TodoProps {
+    todo: TodoType;
+}
+const Todo: FunctionComponent<TodoProps> = ({ todo }) => {
     return (
         <View style={[styles.ItemContainer, todo.completed ? styles.Completed : styles.NotCompleted]}>
             <Text style={styles.ItemTodoText}>

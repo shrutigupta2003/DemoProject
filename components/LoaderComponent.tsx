@@ -1,9 +1,11 @@
+import React from "react";
 import { ActivityIndicator, View } from "react-native"
 import { styles } from "./LoaderComponentStyles";
+import { FunctionComponent } from "react";
 
-const LoaderComponent = () => {
+const LoaderComponent: FunctionComponent = () => {
     return (
-        <View style={styles.container}>
+        <View style={styles.Container}>
             <ActivityIndicator size="large" color="black" />
         </View >)
 }

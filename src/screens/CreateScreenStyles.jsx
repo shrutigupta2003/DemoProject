@@ -42,20 +42,31 @@ export const styles = StyleSheet.create({
     },
     GapContainer: {
         gap: 10,
-    }, ToggleButton: {
+    },
+    ToggleButton: {
         padding: 10,
         borderRadius: 6,
         marginVertical: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 40,
     },
     ToggleButtonText: {
-        color: '#fff',
+        color: 'white',
         fontSize: 16
     },
     Completed: {
-        backgroundColor: 'green'
+        backgroundColor: '#87cefa'
     },
     NotCompleted: {
-        backgroundColor: 'red'
+        backgroundColor: '#87cefa'
+    },
+    SelectedStatus: {
+        backgroundColor: '#0000cd'
+    },
+    InvalidText: {
+        color: 'red'
+    },
+    BtnActive: {
+        backgroundColor: '#8b008b'
     }
 })

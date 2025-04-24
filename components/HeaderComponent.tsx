@@ -1,7 +1,9 @@
+import React from "react";
 import { Text, View } from "react-native"
 import { styles } from "./HeaderComponentStyles"
+import { FunctionComponent } from "react";
 
-const HeaderComponent = () => {
+const HeaderComponent: FunctionComponent = () => {
     return (
         <View style={styles.HeadingContainer} >
             <Text style={styles.HeadingText}>

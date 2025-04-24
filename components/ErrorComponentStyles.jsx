@@ -7,5 +7,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 50,
         padding: 24,
-    }
+    },
+    Text: {
+        color: 'black',
+        textAlign: 'center',
+        marginBottom: 8,
+    },
+    Title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
 })

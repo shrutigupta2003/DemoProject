@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import {
     FlatList,
     View,
@@ -7,15 +7,19 @@ import { observer } from 'mobx-react-lite';
 import HeaderComponent from '../../components/HeaderComponent';
 import { styles } from './AllTodosStyles';
 import Todo from '../../components/Todo';
-import { useStore } from '../../store/RootStore';
+import { RootStoreType, TodoType, useStore } from '../../store/RootStore';
 
-const AllTodos = observer(({ todos }) => {
-    const rootStore = useStore();
+interface CreateScreenProps {
+    todos: TodoType[];
+}
+
+const AllTodos: FunctionComponent<CreateScreenProps> = observer(({ todos }) => {
+    const rootStore: RootStoreType = useStore();
     const { fetchTodosLimitAndSkip } = rootStore;
     return (
         <View>
             <HeaderComponent />
-            <FlatList data={todos.slice()} keyExtractor={(todo) => todo.id.toString()} renderItem={({ item }) => (<Todo todo={item} />)
+            <FlatList data={todos.slice()} keyExtractor={(todo: TodoType) => todo.id.toString()} renderItem={({ item }: { item: TodoType }) => (<Todo todo={item} />)
             } onEndReached={() => fetchTodosLimitAndSkip()} contentContainerStyle={styles.GapContainer}>
             </FlatList >
         </View >

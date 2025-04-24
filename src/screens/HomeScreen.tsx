@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -11,44 +11,53 @@ import { styles } from './HomeScreenStyles';
 import PressableComponent from '../../components/PressableComponent';
 import AllTodos from './AllTodos';
 import LoaderComponent from '../../components/LoaderComponent';
+import { TodoType } from '../../store/RootStore';
+import Toast from 'react-native-toast-message';
 
-const HomeScreen = observer(() => {
+const HomeScreen: FunctionComponent = observer(() => {
     const rootStore = useStore();
-    const [view, setView] = useState(0);
-    const allTodos = rootStore.todos;
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState();
-    const { fetchTodosLimitAndSkip } = rootStore;
-
+    const [view, setView] = useState<number>(0);
+    const allTodos: TodoType[] = rootStore.todos;
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { fetchTodosLimitAndSkip, error, setError } = rootStore;
     useEffect(() => {
         LoadTodos();
     }, []);
 
     const LoadTodos = async () => {
+        setError('');
         setIsLoading(true);
         try {
             await fetchTodosLimitAndSkip();
         }
-        catch (error) {
-            setError('Could not fetch todos')
+        catch (err) {
+            console.warn(err);
         }
         setIsLoading(false);
     }
 
-    const incompleteTodos = allTodos.filter((todo) => todo.completed === false)
-    function handlePress(idx) {
+    const incompleteTodos: TodoType[] = allTodos.filter((todo: TodoType) => todo.completed === false)
+    function handlePress(idx: number): void {
         setView(idx);
     }
 
-    const errorHandler = () => {
-        setError(null);
+    const showToast = (error: string) => {
+        Toast.show({
+            type: "error",
+            text1: "error occured",
+            text2: error,
+        })
+    }
+
+    if (error && !isLoading) {
+        showToast(error);
+        setError('');
     }
 
     if (isLoading)
         return (
             <LoaderComponent />
         )
-
     return (
         <SafeAreaView style={styles.Container}>
             <Text style={styles.Title}>Dashboard</Text>
@@ -64,7 +73,7 @@ const HomeScreen = observer(() => {
                 view === 1 && <AllTodos todos={incompleteTodos} />
             }
             {
-                view === 2 && <CreateScreen todos={allTodos} />
+                view === 2 && <CreateScreen />
             }
         </SafeAreaView >
     )

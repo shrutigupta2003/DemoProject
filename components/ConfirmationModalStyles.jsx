@@ -1,30 +1,30 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-    main: {
+    Main: {
         flex: 1,
     },
-    buttonView: {
+    ButtonView: {
         flex: 1,
         justifyContent: 'flex-end'
     },
-    centeredView: {
+    CenteredView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    modalView: {
+    ModalView: {
         backgroundColor: '#fff',
         padding: 30,
         borderRadius: 20,
         shadowColor: 'black',
         elevation: 5,
     },
-    modalText: {
+    ModalText: {
         fontSize: 30,
         marginBottom: 20
     },
-    buttonContainer: {
+    ButtonContainer: {
         gap: 20,
         flexDirection: 'row',
         alignItems: 'center',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import {
     FlatList,
     Pressable,
@@ -7,22 +7,17 @@ import {
     View,
 } from 'react-native';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../store/RootStore';
+import { RootStoreType, TodoType, useStore } from '../../store/RootStore';
 import { styles } from './CreateScreenStyles';
 import CompleteItem from '../../components/CompleteItem';
 import { colorPicker } from '../../constants/colors';
-import { deleteTodosAPI, fetchTodosAPILimitAndSkip, postTodosAPI, updateTodosAPI } from '../../api/Api';
 
-const CreateScreen = observer(() => {
-    const rootStore = useStore();
-    const { todos, addTodo, deleteTodo, updateTodos, postTodos, updateTodo, editTodo, curInputTodo, handleInputChange, isEdit, fetchTodosLimitAndSkip } = rootStore;
+const CreateScreen: FunctionComponent = observer(() => {
+    const rootStore: RootStoreType = useStore();
+    const { todos, updateTodos, postTodos, curInputTodo, handleInputChange, isEdit, fetchTodosLimitAndSkip } = rootStore;
     const { todo, editTodoId, completed } = curInputTodo;
-    const newTodo = {
-        todo: "go to school",
-        completed: false,
-        userId: 5
-    }
-
+    const [focus, setFocus] = useState<boolean>(false);
+    // const [status, setStatus] = useState<string>('');
     return (
         <View style={styles.Container}>
             <TextInput
@@ -31,19 +26,29 @@ const CreateScreen = observer(() => {
                 style={styles.Input}
                 value={todo}
                 onChangeText={(item) => handleInputChange('todo', item)}
+                onFocus={() => { setFocus(true) }}
             />
-
-            <Pressable
+            {focus && <Text style={styles.InvalidText}>Todo must be of atleast 3 characters</Text>}
+            <Pressable style={[styles.ToggleButton, styles.Completed, completed ? styles.SelectedStatus : '']} onPress={() => { handleInputChange('completed', true) }}>
+                <Text style={styles.ToggleButtonText}>
+                    Completed
+                </Text>
+            </Pressable>
+            <Pressable style={[styles.ToggleButton, styles.NotCompleted, completed ? '' : styles.SelectedStatus]} onPress={() => { handleInputChange('completed', false) }}>
+                <Text style={styles.ToggleButtonText}>
+                    Incomplete
+                </Text>
+            </Pressable>
+            {/* <Pressable
                 style={[styles.ToggleButton, completed ? styles.Completed : styles.NotCompleted]}
                 onPress={() => handleInputChange('completed', !completed)}
             >
                 <Text style={styles.ToggleButtonText}>
                     {completed ? 'Completed' : 'Incomplete'}
                 </Text>
-            </Pressable>
+            </Pressable> */}
 
-
-            <Pressable style={styles.AddButton}>
+            <Pressable style={[styles.AddButton, focus ? styles.BtnActive : '']}>
                 <Text
                     style={styles.BtnText}
                     onPress={() =>
@@ -64,8 +69,8 @@ const CreateScreen = observer(() => {
                 </View>
                 <FlatList
                     data={todos.slice()}
-                    keyExtractor={(todo) => todo.id.toString()}
-                    renderItem={({ item }) => (
+                    keyExtractor={(todo: TodoType) => todo.id.toString()}
+                    renderItem={({ item }: { item: TodoType }) => (
                         <CompleteItem
                             todo={item}
                         />

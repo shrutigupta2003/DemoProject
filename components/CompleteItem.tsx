@@ -1,29 +1,33 @@
+import React from "react";
 import { Pressable, Text, View } from "react-native"
 import { styles } from "./CompleteItemStyles";
-import { useStore } from "../store/RootStore";
+import { RootStoreType, TodoType, useStore } from "../store/RootStore";
 import ConfirmationModal from "./ConfirmationModal";
-import { useState } from "react";
+import { FunctionComponent, useState } from "react";
 import SuccessModal from "./SuccessModal";
 
-const CompleteItem = ({ todo }) => {
-    const rootStore = useStore();
+interface CompleteItemProps {
+    todo: TodoType;
+}
+const CompleteItem: FunctionComponent<CompleteItemProps> = ({ todo }) => {
+    const rootStore: RootStoreType = useStore();
     const { editTodo, deleteTodos } = rootStore;
-    const [showModal, setShowModal] = useState(false);
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
-    const handleDeletePress = () => {
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+    const handleDeletePress = (): void => {
         setShowModal(true);
     }
-    const handleConfirm = () => {
+
+    const handleConfirm = (): void => {
         setShowModal(false);
         setShowSuccessModal(true);
     }
 
-    const handleCancel = () => {
-
+    const handleCancel = (): void => {
         setShowModal(false);
     }
 
-    const handleOkay = () => {
+    const handleOkay = (): void => {
         deleteTodos(todo.id);
         setShowSuccessModal(false);
     }

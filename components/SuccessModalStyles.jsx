@@ -1,16 +1,15 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-    container: {
+    Container: {
         flex: 1,
     },
-
-    centeredView: {
+    CenteredView: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    modalView: {
+    ModalView: {
         backgroundColor: '#fff',
         padding: 30,
         borderRadius: 20,
@@ -18,7 +17,7 @@ export const styles = StyleSheet.create({
         elevation: 5,
         gap: 20,
     },
-    buttonView: {
+    ButtonView: {
         alignItems: 'center',
         justifyContent: 'center',
     },
